@@ -1,21 +1,47 @@
-import axios from "axios";
 
+import api from "./Api";
+
+import handleRequest from "./ApiNotification";
 class UserService {
+  
   async list() {
-    const users = await axios.get(`${process.env.REACT_APP_SERVER_URL}/users`);
-    return users;
+    return await handleRequest(
+      () => api.get("/users"),
+      "Usuários carregados com sucesso",
+      "Erro ao buscar usuários"
+    );
   }
+  
   async get(id) {
-    throw new Error("Not implemented");
+    return await handleRequest(
+      () => api.get(`/users/${id}`),
+      "Usuário carregado com sucesso",
+      "Erro ao buscar usuário"
+    );
   }
+  
   async create(data) {
-    throw new Error("Not implemented");
+    return await handleRequest(
+      () => api.post(`/users`, data),
+      "Usuário criado com sucesso",
+      "Erro ao criar usuário"
+    );
   }
+  
+  async update(data) {
+    return await handleRequest(
+      () => api.put(`/users`, data),
+      "Usuário atualizado com sucesso",
+      "Erro ao atualizar usuário"
+    );
+  }
+  
   async delete(id) {
-    throw new Error("Not implemented");
-  }
-  async update(id, data) {
-    throw new Error("Not implemented");
+    return await handleRequest(
+      () => api.delete(`/users/${id}`),
+      "Usuário excluído com sucesso",
+      "Erro ao excluir usuário"
+    );
   }
 }
 
